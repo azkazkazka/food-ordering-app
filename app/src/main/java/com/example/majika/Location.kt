@@ -6,27 +6,55 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Location.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class Location : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
+        val recyclerView: RecyclerView = findViewById(R.id.mRecyclerView)
+
+        populateList()
+
+        val adapter: LocationRVAdapter = LocationRVAdapter(this.menuModels)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        getResponse()
+    }
+
+    private fun populateList() {
+        val names = getResources().getStringArray(R.array.amino_acids_full_txt)
+        val desc = getResources().getStringArray(R.array.amino_acids_three)
+        for (i in names.indices) {
+            this.menuModels.add(MenuModel(names[i], desc[i]))
         }
+    }
+
+    private fun getResponse() {
+        val retrofitTest = RetrofitClient()
+        val retrofit : Retrofit = retrofitTest.getInstance()
+
+        var apiInterface = retrofit.create(ApiInterface::class.java)
+        lifecycleScope.launchWhenCreated {
+            try {
+                val response = apiInterface.getAllUsers()
+                if (response.isSuccessful()) {
+                    //your code for handaling success response
+                    println("BISAAAAjioj")
+
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        response.errorBody().toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }catch (Ex:Exception){
+                Log.e("Error",Ex.localizedMessage)
+            }
+        }
+
     }
 
     override fun onCreateView(
@@ -35,25 +63,5 @@ class Location : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_location, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Location.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Location().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

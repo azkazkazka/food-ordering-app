@@ -1,5 +1,33 @@
 <resources>
-    <string name="app_name">Majika</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">majika</string>
+
+    <string-array name="amino_acids_full_txt">
+        <item>Haha</item>
+        <item>Hoho</item>
+        <item>Hihi</item>
+        <item>Huhu</item>
+        <item>Hehe</item>
+        <item>Haho</item>
+        <item>Haha</item>
+        <item>Hoho</item>
+        <item>Hihi</item>
+        <item>Huhu</item>
+        <item>Hehe</item>
+        <item>Haho</item>
+    </string-array>
+
+    <string-array name="amino_acids_three">
+        <item>Hah</item>
+        <item>Hoh</item>
+        <item>Hih</item>
+        <item>Huh</item>
+        <item>Heh</item>
+        <item>Hah</item>
+        <item>Hah</item>
+        <item>Hoh</item>
+        <item>Hih</item>
+        <item>Huh</item>
+        <item>Heh</item>
+        <item>Hah</item>
+    </string-array>
 </resources>
