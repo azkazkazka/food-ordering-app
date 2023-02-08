@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Twibbon"
+        android:id="@+id/twibbon"
+        android:icon="@drawable/baseline_camera_enhance_24"/>
+    <item android:title="Location"
+        android:id="@+id/location"
+        android:icon="@drawable/baseline_location_on_24"/>
+    <item android:title="Menu"
+        android:id="@+id/menu"
+        android:icon="@drawable/baseline_restaurant_menu_24"/>
+    <item android:title="Cart"
+        android:id="@+id/cart"
+        android:icon="@drawable/baseline_shopping_cart_24"/>
+</menu>
