@@ -1,14 +1,18 @@
 package com.example.majika
 
-import retrofit2.Response
+import com.example.majika.response.ResponseLocation
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiInterface {
     @GET("v1/menu")
-    suspend fun getAllUsers(): Response<ResponseMenu>
+    fun getAllUsers(): Call<ResponseMenu>
 
     @POST("v1/payment/{code}")
-    suspend fun postPayment(@Path("code") code: String)
+    fun postPayment(@Path("code") code: String)
+
+    @GET("v1/branch")
+    fun getAllBranch(): Call<ResponseLocation>
 }

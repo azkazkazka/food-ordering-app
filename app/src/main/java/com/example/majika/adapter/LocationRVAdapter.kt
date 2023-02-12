@@ -1,12 +1,15 @@
-package com.example.majika
+package com.example.majika.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.majika.model.LocationModel
+import com.example.majika.MenuModel
+import com.example.majika.R
 
-class LocationRVAdapter(private val mList: List<MenuModel>) :
+class LocationRVAdapter(private val mList: List<LocationModel>) :
     RecyclerView.Adapter<LocationRVAdapter.ViewHolder>() {
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,11 +23,11 @@ class LocationRVAdapter(private val mList: List<MenuModel>) :
 
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val menuModel = mList[position]
+        val locationModel = mList[position]
 
         // sets the image to the imageview from our itemHolder class
-        holder.cabangResto.text = menuModel.cabang_restoran
-        holder.deskripsiResto.text = menuModel.deskripsi
+        holder.cabangResto.text = locationModel.get_name
+        holder.lokasiResto.text = locationModel.get_address
 
     }
 
@@ -36,6 +39,6 @@ class LocationRVAdapter(private val mList: List<MenuModel>) :
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val cabangResto: TextView = itemView.findViewById(R.id.cabangRestoran)
-        val deskripsiResto: TextView = itemView.findViewById(R.id.deskripsiRestoran)
+        val lokasiResto: TextView = itemView.findViewById(R.id.lokasiRestoran)
     }
 }
