@@ -77,11 +77,9 @@ class Menu() : Fragment() {
                             )
                         }
                     }
+                    (activity as MainActivity).menuModel.clear()
                     (activity as MainActivity).menuModel.addAll(foodModel)
                     (activity as MainActivity).menuModel.addAll(drinkModel)
-                    val adapter: MenuRVAdapter = MenuRVAdapter((activity as MainActivity).menuModel)
-                    recyclerView.adapter = adapter
-                    println((activity as MainActivity).menuModel)
 
                 } else {
 
@@ -95,6 +93,8 @@ class Menu() : Fragment() {
 
 //        val adapter: MenuRVAdapter = MenuRVAdapter(menuModel)
 //        recyclerView.adapter = adapter
+        val adapter: MenuRVAdapter = MenuRVAdapter((activity as MainActivity).menuModel)
+        recyclerView.adapter = adapter
         println("MASUKKK")
         println((activity as MainActivity).menuModel)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
