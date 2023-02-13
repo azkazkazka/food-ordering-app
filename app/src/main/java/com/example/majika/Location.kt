@@ -49,7 +49,7 @@ class Location : Fragment() {
                     // move response.body() to locationModel
                     println(response)
                     println(response.body())
-                    for (data in response.body()!!.data) {
+                    for (data in (response.body()!!.data).sortedBy { it.name }) {
                         locationModel.add(
                             LocationModel(
                                 data.name,
