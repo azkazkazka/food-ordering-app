@@ -2,6 +2,7 @@ package com.example.majika
 
 import com.example.majika.response.ResponseLocation
 import com.example.majika.response.ResponseMenu
+import com.example.majika.response.ResponsePayment
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
@@ -19,7 +20,7 @@ interface ApiInterface {
     fun getAllDrink(): Call<ResponseMenu>
 
     @POST("v1/payment/{code}")
-    fun postPayment(@Path("code") code: String)
+    fun postPayment(@Path("code") code: String) : Call<ResponsePayment>
 
     @GET("v1/payment/success")
     fun getSuccessPayment() : Call<ResponseBody>

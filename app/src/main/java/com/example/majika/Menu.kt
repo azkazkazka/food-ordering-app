@@ -1,5 +1,6 @@
 package com.example.majika
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -16,6 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import android.widget.Button
 
 
 class Menu() : Fragment() {
@@ -34,6 +36,11 @@ class Menu() : Fragment() {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_menu, container, false)
         val recyclerView: RecyclerView = view.findViewById(R.id.menuRecyclerView)
+        val buttonClick: Button = view.findViewById<Button>(R.id.button_click)
+        buttonClick.setOnClickListener {
+            val intent = Intent(activity, Payment::class.java)
+            startActivity(intent)
+        }
 
         val retrofitTest = RetrofitClient()
         val retrofit : Retrofit = retrofitTest.getInstance()
@@ -83,7 +90,7 @@ class Menu() : Fragment() {
 
                 } else {
 
-                }
+    }
 
             }
             override fun onFailure(call: Call<ResponseMenu>, t: Throwable) {
@@ -104,6 +111,4 @@ class Menu() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
-
-
 }

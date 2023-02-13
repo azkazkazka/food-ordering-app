@@ -17,19 +17,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         replaceFragment(Menu())
+        binding.bottomNavigationView.selectedItemId = R.id.menu
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.menu -> {
+                    replaceFragment(Menu())
+                    true
+                }
                 R.id.twibbon -> {
                     replaceFragment(Twibbon())
                     true
                 }
                 R.id.location -> {
                     replaceFragment(Location())
-                    true
-                }
-                R.id.menu -> {
-                    replaceFragment(Menu())
                     true
                 }
                 R.id.cart -> {
