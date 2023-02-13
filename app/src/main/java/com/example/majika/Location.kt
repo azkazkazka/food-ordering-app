@@ -21,26 +21,21 @@ import retrofit2.Retrofit
 
 class Location : Fragment() {
 
-    public var locationModel = ArrayList<LocationModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    fun populateList(locationModel : ArrayList<LocationModel>) {
-        this.locationModel = locationModel
-    }
 
-//    private fun populateList(locationObject : LocationModel) {
-////        val names = getResources().getStringArray(R.array.amino_acids_full_txt)
-////        val desc = getResources().getStringArray(R.array.amino_acids_three)
-//        this.locationModel.add(locationObject)
-//        // get array of string name from response json
-//    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val view: View = inflater.inflate(R.layout.fragment_location, container, false)
+        val recyclerView: RecyclerView = view.findViewById(R.id.mRecyclerView)
 
-    private fun getResponse() {
         val retrofitTest = RetrofitClient()
         val retrofit : Retrofit = retrofitTest.getInstance()
-        val location = this
         var apiInterface = retrofit.create(ApiInterface::class.java)
         var locationModel = ArrayList<LocationModel>()
 
@@ -66,21 +61,10 @@ class Location : Fragment() {
                                 data.latitude
                             )
                         )
-//                        location.populateList(LocationModel(
-//                            data.name,
-//                            data.popular_food,
-//                            data.address,
-//                            data.contact_person,
-//                            data.phone_number,
-//                            data.longitude,
-//                            data.latitude
-//                        ))
                     }
-                    //init location class
-//                    location.populateList(locationModel)
-                    populateList(locationModel)
-                    println(locationModel)
-                    println(locationModel[0].get_name)
+                    val adapter: LocationRVAdapter = LocationRVAdapter(locationModel)
+                    recyclerView.adapter = adapter
+
                 } else {
 
                 }
@@ -90,26 +74,8 @@ class Location : Fragment() {
                 Log.e("Error", t.localizedMessage)
             }
         })
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_location, container, false)
-        val recyclerView: RecyclerView = view.findViewById(R.id.mRecyclerView)
-
-//        populateList()
-//        this.locationModel = getResponse()
-//        println(this.locationModel)
-        getResponse()
-        println(this.locationModel)
-        val adapter: LocationRVAdapter = LocationRVAdapter(this.locationModel)
-        recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-
-
         return view
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
