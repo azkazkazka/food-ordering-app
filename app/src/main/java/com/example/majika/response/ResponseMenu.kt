@@ -1,8 +1,8 @@
-package com.example.majika
+package com.example.majika.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseMenu(
+data class MenuData(
     @SerializedName("name")
     var name: String,
     @SerializedName("description")
@@ -15,4 +15,11 @@ data class ResponseMenu(
     var sold: Int,
     @SerializedName("type")
     var type: String,
+)
+
+data class ResponseMenu(
+    @SerializedName("data")
+    var data: List<MenuData>,
+    @SerializedName("size")
+    var size: Int,
 )
