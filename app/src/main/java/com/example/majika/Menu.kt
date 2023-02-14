@@ -90,9 +90,9 @@ class Menu() : Fragment() {
 
                 } else {
 
-    }
-
+                }
             }
+            
             override fun onFailure(call: Call<ResponseMenu>, t: Throwable) {
                 Log.e("Error", t.localizedMessage)
             }

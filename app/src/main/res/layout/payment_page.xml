@@ -13,6 +13,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Payment"
+            android:background="@color/purple_500"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="26dp"
+            android:textStyle="bold"/>
+
         <com.budiyev.android.codescanner.CodeScannerView
             android:id="@+id/scanner_view"
             android:layout_width="match_parent"

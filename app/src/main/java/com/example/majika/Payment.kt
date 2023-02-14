@@ -1,7 +1,9 @@
 package com.example.majika
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -16,6 +18,7 @@ import com.budiyev.android.codescanner.ScanMode
 import com.example.majika.model.PaymentModel
 import com.example.majika.response.ResponsePayment
 import com.google.gson.JsonObject
+import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,14 +61,27 @@ class Payment : AppCompatActivity() {
                             if (response.isSuccessful()) {
                                 //your code for handling success response
                                 // move response.body() to locationModel
+                                val duration = 5000
                                 println(response)
                                 println(response.body())
-                                Toast.makeText(this@Payment, "Payment Success", Toast.LENGTH_SHORT).show()
+                                if (response.body()?.status == "SUCCESS") {
+                                    val toast = Toast.makeText(this@Payment, "Payment Success", Toast.LENGTH_LONG)
+                                    toast.show()
+                                    Handler().postDelayed({
+                                        val intent = Intent(this@Payment, MainActivity::class.java)
+                                        startActivity(intent)
+                                    }, duration.toLong())
+                                } else {
+                                    val toast = Toast.makeText(this@Payment, "Payment Failed", Toast.LENGTH_LONG)
+                                    toast.show()
+                                    onResume()
+                                }
                             } else {
-                                //your code for handling error response
-                                println(response)
-                                println(response.body())
-                                Toast.makeText(this@Payment, "Payment Failed", Toast.LENGTH_SHORT).show()
+//                                //your code for handling error response
+//                                println(response)
+//                                println(response.body())
+//                                Toast.makeText(this@Payment, "LALALAL", Toast.LENGTH_SHORT).show()
+//                                codeScanner()
                             }
                         }
 
