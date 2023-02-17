@@ -8,10 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.R
 import com.example.majika.model.MenuModel
 
-
-
 class MenuRVAdapter(private val mList: List<MenuModel>) :
     RecyclerView.Adapter<MenuRVAdapter.ViewHolder>() {
+    private var notYetDrink = true;
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -26,9 +25,16 @@ class MenuRVAdapter(private val mList: List<MenuModel>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val menuModel = mList[position]
 
-        // sets the image to the imageview from our itemHolder class
+        println(menuModel.get_type)
+        if (position == 0 && menuModel.get_type == "Food") {
+            holder.header.text = "Makanan"
+        } else if (notYetDrink && menuModel.get_type == "Drink") {
+            holder.header.text = "Minuman"
+            notYetDrink = false
+        } else {
+            holder.header.visibility = View.GONE
+        }
         holder.menu.text = menuModel.get_name
-        //benerin format harga
         holder.harga.text =  menuModel.get_currency + menuModel.get_price.toString()
         holder.terjual.text = "Terjual : " + menuModel.get_sold.toString()
         holder.deskripsi.text = menuModel.get_description
@@ -46,5 +52,6 @@ class MenuRVAdapter(private val mList: List<MenuModel>) :
         val harga: TextView = itemView.findViewById(R.id.hargaMenu)
         val terjual: TextView = itemView.findViewById(R.id.terjualMenu)
         val deskripsi: TextView = itemView.findViewById(R.id.deskripsiMenu)
+        val header: TextView = itemView.findViewById(R.id.typeHeader)
     }
 }

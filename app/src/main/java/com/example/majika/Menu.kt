@@ -21,10 +21,6 @@ import android.widget.Button
 
 
 class Menu() : Fragment() {
-
-
-//    var menuModel : ArrayList<MenuModel> = MainActivity().menuModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -36,11 +32,6 @@ class Menu() : Fragment() {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_menu, container, false)
         val recyclerView: RecyclerView = view.findViewById(R.id.menuRecyclerView)
-        val buttonClick: Button = view.findViewById<Button>(R.id.button_click)
-        buttonClick.setOnClickListener {
-            val intent = Intent(activity, Payment::class.java)
-            startActivity(intent)
-        }
 
         val retrofitTest = RetrofitClient()
         val retrofit : Retrofit = retrofitTest.getInstance()
