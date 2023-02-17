@@ -9,14 +9,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
+import com.example.majika.adapter.MenuRVAdapter
 import com.example.majika.model.PaymentModel
 import com.example.majika.response.ResponsePayment
+import com.example.majika.viewmodel.PaymentViewModel
 import com.google.gson.JsonObject
 import kotlinx.coroutines.delay
 import retrofit2.Call
@@ -26,6 +30,7 @@ import retrofit2.Retrofit
 
 class Payment : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
+    private val viewModel by lazy { PaymentViewModel(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.payment_page)
@@ -49,48 +54,24 @@ class Payment : AppCompatActivity() {
             decodeCallback = DecodeCallback {
                 runOnUiThread {
                     Log.d("Main", "Scan result: ${it.text}")
-                    val retrofitClient = RetrofitClient()
-                    val retrofit: Retrofit = retrofitClient.getInstance()
-                    var apiInterface = retrofit.create(ApiInterface::class.java)
-
-                    apiInterface.postPayment(it.text).enqueue(object : Callback<ResponsePayment> {
-                        override fun onResponse(
-                            call: Call<ResponsePayment>,
-                            response: Response<ResponsePayment>
-                        ) {
-                            if (response.isSuccessful()) {
-                                //your code for handling success response
-                                // move response.body() to locationModel
-                                val duration = 5000
-                                println(response)
-                                println(response.body())
-                                if (response.body()?.status == "SUCCESS") {
-                                    val toast = Toast.makeText(this@Payment, "Payment Success", Toast.LENGTH_LONG)
-                                    toast.show()
-                                    Handler().postDelayed({
-                                        val intent = Intent(this@Payment, MainActivity::class.java)
-                                        startActivity(intent)
-                                    }, duration.toLong())
-                                } else {
-                                    val toast = Toast.makeText(this@Payment, "Payment Failed", Toast.LENGTH_LONG)
-                                    toast.show()
-                                    onResume()
-                                }
+                    val duration = 5000
+                    viewModel.apply {
+                        postPayment(it.text)
+                        paymentStatus.observe(this@Payment) { paymentStatus ->
+                            if (paymentStatus == "SUCCESS") {
+                                val toast = Toast.makeText(this@Payment, "Payment Success", Toast.LENGTH_LONG)
+                                toast.show()
+                                Handler().postDelayed({
+                                    val intent = Intent(this@Payment, MainActivity::class.java)
+                                    startActivity(intent)
+                                }, duration.toLong())
                             } else {
-//                                //your code for handling error response
-//                                println(response)
-//                                println(response.body())
-//                                Toast.makeText(this@Payment, "LALALAL", Toast.LENGTH_SHORT).show()
-//                                codeScanner()
+                                val toast = Toast.makeText(this@Payment, "Payment Failed", Toast.LENGTH_LONG)
+                                toast.show()
+                                onResume()
                             }
                         }
-
-                        override fun onFailure(call: Call<ResponsePayment>, t: Throwable) {
-                            //your code for handling failure
-                            println(t)
-                            Toast.makeText(this@Payment, "Payment Failed", Toast.LENGTH_SHORT).show()
-                        }
-                    })
+                    }
                 }
             }
 

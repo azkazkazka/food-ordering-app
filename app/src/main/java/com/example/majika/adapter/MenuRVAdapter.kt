@@ -3,15 +3,19 @@ package com.example.majika.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.R
+import com.example.majika.data.AppDatabase
 import com.example.majika.model.MenuModel
 
 
 
 class MenuRVAdapter(private val mList: List<MenuModel>) :
+//    private lateinit var database: AppDatabase
     RecyclerView.Adapter<MenuRVAdapter.ViewHolder>() {
+    private lateinit var database: AppDatabase
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -32,6 +36,24 @@ class MenuRVAdapter(private val mList: List<MenuModel>) :
         holder.harga.text =  menuModel.get_currency + menuModel.get_price.toString()
         holder.terjual.text = "Terjual : " + menuModel.get_sold.toString()
         holder.deskripsi.text = menuModel.get_description
+//        var queryResult = database.menuDao().findByName(menuModel.get_name)
+//        if (queryResult != null) {
+//            holder.qty.text = queryResult.quantity.toString()
+//        } else {
+//            holder.qty.text = "0"
+//        }
+//        holder.add.setOnClickListener(View.OnClickListener { v ->
+//            var qty = holder.qty.text.toString().toInt()
+//            qty++
+//            holder.qty.text = qty.toString()
+//        })
+//        holder.sub.setOnClickListener(View.OnClickListener { v ->
+//            var qty = holder.qty.text.toString().toInt()
+//            if (qty > 0) {
+//                qty--
+//                holder.qty.text = qty.toString()
+//            }
+//        })
 
     }
 
@@ -46,5 +68,8 @@ class MenuRVAdapter(private val mList: List<MenuModel>) :
         val harga: TextView = itemView.findViewById(R.id.hargaMenu)
         val terjual: TextView = itemView.findViewById(R.id.terjualMenu)
         val deskripsi: TextView = itemView.findViewById(R.id.deskripsiMenu)
+        val add: Button = itemView.findViewById(R.id.add)
+        val sub: Button = itemView.findViewById(R.id.sub)
+        val qty: TextView = itemView.findViewById(R.id.quantity)
     }
 }
