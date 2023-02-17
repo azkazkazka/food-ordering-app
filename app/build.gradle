@@ -1,7 +1,7 @@
-plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-kapt'
+
 
 android {
     namespace 'com.example.majika'
@@ -35,10 +35,10 @@ android {
     }
 }
 
-configurations {
-    cleanedAnnotations
-    implementation.exclude group: 'org.jetbrains' , module:'annotations'
-}
+//configurations {
+//    cleanedAnnotations
+//    implementation.exclude group: 'org.jetbrains' , module:'annotations'
+//}
 
 dependencies {
 
@@ -59,6 +59,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
     implementation 'androidx.room:room-runtime:2.5.0'
-    implementation 'androidx.room:room-compiler:2.5.0'
+    implementation 'androidx.room:room-ktx:2.5.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+//    implementation 'android.arch.persistence.room:compiler:1.1.1'
+    kapt 'androidx.room:room-compiler:2.5.0'
 }

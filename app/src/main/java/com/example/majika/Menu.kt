@@ -1,6 +1,5 @@
 package com.example.majika
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.adapter.MenuRVAdapter
-import android.widget.Button
 import com.example.majika.viewmodel.MenuViewModel
 
 
@@ -30,12 +28,14 @@ class Menu() : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.menuRecyclerView)
 
         viewModel.apply {
+            insertCart((activity as MainActivity).updateMenuList)
             getMenu()
             menuList.observe(viewLifecycleOwner) {
-                val adapter: MenuRVAdapter = MenuRVAdapter(it)
+                val adapter: MenuRVAdapter = MenuRVAdapter(this@Menu, it)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(view.context)
             }
+
         }
 
         return view

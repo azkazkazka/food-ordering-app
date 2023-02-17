@@ -7,6 +7,7 @@ class MenuModel (
     private var price: Int,
     private var sold: Int,
     private var type: String,
+    private var quantity: Int,
     ) {
     var get_name: String = name
         get() = field
@@ -25,5 +26,13 @@ class MenuModel (
 
     var get_type: String = type
         get() = field
+
+    var get_quantity: Int = quantity
+        get() = field
+
+    var set_quantity: Int = quantity
+        set(value) {
+            field = value
+        }
 
 }

@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.majika.MainActivity
+import com.example.majika.Menu
 import com.example.majika.R
-import com.example.majika.data.AppDatabase
 import com.example.majika.model.MenuModel
 
-class MenuRVAdapter(private val mList: List<MenuModel>) :
-//    private lateinit var database: AppDatabase
+class MenuRVAdapter(private val menuFragment: Menu, private val mList: List<MenuModel>) :
+
     RecyclerView.Adapter<MenuRVAdapter.ViewHolder>() {
     private var notYetDrink = true;
-    private lateinit var database: AppDatabase
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -27,7 +27,7 @@ class MenuRVAdapter(private val mList: List<MenuModel>) :
 
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val menuModel = mList[position]
+        var menuModel = mList[position]
 
         println(menuModel.get_type)
         if (position == 0 && menuModel.get_type == "Food") {
@@ -42,24 +42,64 @@ class MenuRVAdapter(private val mList: List<MenuModel>) :
         holder.harga.text =  menuModel.get_currency + menuModel.get_price.toString()
         holder.terjual.text = "Terjual : " + menuModel.get_sold.toString()
         holder.deskripsi.text = menuModel.get_description
-//        var queryResult = database.menuDao().findByName(menuModel.get_name)
-//        if (queryResult != null) {
-//            holder.qty.text = queryResult.quantity.toString()
-//        } else {
-//            holder.qty.text = "0"
-//        }
-//        holder.add.setOnClickListener(View.OnClickListener { v ->
-//            var qty = holder.qty.text.toString().toInt()
-//            qty++
-//            holder.qty.text = qty.toString()
-//        })
-//        holder.sub.setOnClickListener(View.OnClickListener { v ->
-//            var qty = holder.qty.text.toString().toInt()
-//            if (qty > 0) {
-//                qty--
-//                holder.qty.text = qty.toString()
-//            }
-//        })
+        holder.qty.text = menuModel.get_quantity.toString()
+        holder.add.setOnClickListener(View.OnClickListener { v ->
+            var quantity = holder.qty.text.toString().toInt()
+            quantity = quantity + 1
+            holder.qty.text = quantity.toString()
+            // if updateMenuModel contain menuModel, update the quantity
+            // else add menuModel to updateMenuModel
+            var newMenuModel = MenuModel(
+                menuModel.get_name,
+                menuModel.get_description,
+                menuModel.get_currency,
+                menuModel.get_price,
+                menuModel.get_sold,
+                menuModel.get_type,
+                quantity
+            )
+            var contains = false
+            for(i in 0 until (menuFragment.activity as MainActivity).updateMenuList.size){
+                if((menuFragment.activity as MainActivity).updateMenuList[i].get_name == menuModel.get_name){
+                    (menuFragment.activity as MainActivity).updateMenuList[i] = newMenuModel
+                    contains = true
+                    break
+                }
+            }
+            if(!contains){
+                (menuFragment.activity as MainActivity).updateMenuList.add(newMenuModel)
+            }
+        })
+        holder.sub.setOnClickListener(View.OnClickListener { v ->
+            var quantity = holder.qty.text.toString().toInt()
+            if (quantity > 0) {
+                quantity = quantity - 1
+                holder.qty.text = quantity.toString()
+            }
+            // if updateMenuModel contain menuModel, update the quantity
+            // else add menuModel to updateMenuModel
+            var newMenuModel = MenuModel(
+                menuModel.get_name,
+                menuModel.get_description,
+                menuModel.get_currency,
+                menuModel.get_price,
+                menuModel.get_sold,
+                menuModel.get_type,
+                quantity
+            )
+            println(quantity)
+            var contains = false
+            for(i in 0 until (menuFragment.activity as MainActivity).updateMenuList.size){
+                if((menuFragment.activity as MainActivity).updateMenuList[i].get_name == menuModel.get_name){
+                    (menuFragment.activity as MainActivity).updateMenuList[i] = newMenuModel
+                    contains = true
+                    break
+                }
+            }
+            if(!contains){
+                (menuFragment.activity as MainActivity).updateMenuList.add(newMenuModel)
+            }
+        })
 
     }
 

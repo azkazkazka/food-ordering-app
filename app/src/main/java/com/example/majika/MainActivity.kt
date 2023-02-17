@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     public var menuModel : ArrayList<MenuModel> = ArrayList<MenuModel>()
-
+    public var updateMenuList: ArrayList<MenuModel> = ArrayList<MenuModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

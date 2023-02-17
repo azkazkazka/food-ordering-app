@@ -62,6 +62,7 @@ class Cart : Fragment() {
                                     data.price,
                                     data.sold,
                                     data.type,
+                                    0,
                                 )
                             )
                         }
@@ -74,6 +75,7 @@ class Cart : Fragment() {
                                     data.price,
                                     data.sold,
                                     data.type,
+                                    0,
                                 )
                             )
                         }
@@ -94,11 +96,11 @@ class Cart : Fragment() {
 
 //        val adapter: MenuRVAdapter = MenuRVAdapter(menuModel)
 //        recyclerView.adapter = adapter
-        val adapter: MenuRVAdapter = MenuRVAdapter((activity as MainActivity).menuModel)
-        recyclerView.adapter = adapter
-        println("MASUKKK")
-        println((activity as MainActivity).menuModel)
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
+//        val adapter: MenuRVAdapter = MenuRVAdapter( (activity as MainActivity).menuModel)
+//        recyclerView.adapter = adapter
+//        println("MASUKKK")
+//        println((activity as MainActivity).menuModel)
+//        recyclerView.layoutManager = LinearLayoutManager(this.context)
         return view
     }
 

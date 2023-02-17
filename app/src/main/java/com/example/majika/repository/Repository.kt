@@ -2,17 +2,13 @@ package com.example.majika.repository
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import com.example.majika.MainActivity
 import com.example.majika.data.AppDatabase
 import com.example.majika.data.dao.MenuDBDao
 import com.example.majika.data.entity.MenuDB
 import com.example.majika.model.LocationModel
 import com.example.majika.model.MenuModel
-import com.example.majika.response.ResponseLocation
-import com.example.majika.response.ResponseMenu
 import com.example.majika.retrofit.ApiInterface
 import com.example.majika.retrofit.ApiUtils
-import com.example.majika.retrofit.ApiUtils.Companion.getApiInterface
 import kotlinx.coroutines.delay
 
 class Repository(context: Context) {
@@ -23,8 +19,8 @@ class Repository(context: Context) {
     val paymentStatus = MutableLiveData<String>()
 
     private val api: ApiInterface = ApiUtils.getApiInterface()
-//    private val room: MenuDBDao? =
-//        AppDatabase.getInstance(context)?.menuDBDao()
+    private val room: MenuDBDao? =
+        AppDatabase.getInstance(context)?.menuDBDao()
 
     suspend fun getMenu() {
         try{
@@ -34,6 +30,10 @@ class Repository(context: Context) {
             var drinkModel = mutableListOf<MenuModel>()
             if (response.isSuccessful) {
                 for (data in response.body()!!.data) {
+                    var quantity = room?.getQuantity(data.name)
+                    if(quantity == null){
+                        quantity = 0
+                    }
                     if(data.type == "Food"){
                         foodModel.add(
                             MenuModel(
@@ -43,6 +43,7 @@ class Repository(context: Context) {
                                 data.price,
                                 data.sold,
                                 data.type,
+                                quantity,
                             )
                         )
                     }
@@ -55,6 +56,7 @@ class Repository(context: Context) {
                                 data.price,
                                 data.sold,
                                 data.type,
+                                quantity,
                             )
                         )
                     }
@@ -114,6 +116,35 @@ class Repository(context: Context) {
             e.printStackTrace()
         }
     }
+
+    suspend fun insertCart(menu: List<MenuModel> ){
+        //delete old data
+        room?.delete()
+        //insert new data
+        try{
+            delay(500)
+            for (data in menu) {
+                room?.insert(
+                    MenuDB(
+                        null,
+                        data.get_name,
+                        data.get_description,
+                        data.get_currency,
+                        data.get_price,
+                        data.get_sold,
+                        data.get_type,
+                        data.get_quantity
+                    )
+                )
+            }
+        }
+        catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
+//    suspend fun getAllCart(){
+//        cartList.value = room?.getAll()
+//    }
 //    suspend fun getAll() = room?.getAll()
 //
 //    suspend fun loadAllByIds(menuIds: IntArray) = room?.loadAllByIds(menuIds)

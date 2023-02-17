@@ -5,21 +5,21 @@ import com.example.majika.data.entity.MenuDB
 
 @Dao
 interface MenuDBDao {
-    @Query("SELECT * FROM menu")
+    @Query("SELECT * FROM MenuDB")
     fun getAll(): List<MenuDB>
 
-    @Query("SELECT * FROM menu WHERE id IN (:menuIds)")
+    @Query("SELECT * FROM MenuDB WHERE id IN (:menuIds)")
     fun loadAllByIds(menuIds: IntArray): List<MenuDB>
 
-    @Query("SELECT * FROM menu WHERE name = :name")
-    fun findByName(name: String): MenuDB
+    @Query("SELECT quantity FROM MenuDB WHERE name = :name")
+    fun getQuantity(name: String): Int
 
     @Insert
-    fun insertAll(vararg menu: MenuDB)
+    fun insert(menu: MenuDB)
 
-    @Query("UPDATE menu SET quantity = :quantity WHERE name = :name")
+    @Query("UPDATE MenuDB SET quantity = :quantity WHERE name = :name")
     fun update(name: String, quantity: Int)
 
-    @Delete
-    fun delete(menu: MenuDB)
+    @Query("DELETE FROM MenuDB")
+    fun delete()
 }

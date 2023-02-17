@@ -18,5 +18,11 @@ class MenuViewModel(context: Context) : ViewModel() {
         viewModelScope.launch {
             repository.getMenu()
         }
+
+    }
+    fun insertCart(menu: List<MenuModel>){
+        viewModelScope.launch {
+            repository.insertCart(menu)
+        }
     }
 }
