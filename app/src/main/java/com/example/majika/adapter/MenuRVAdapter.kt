@@ -11,7 +11,7 @@ import com.example.majika.Menu
 import com.example.majika.R
 import com.example.majika.model.MenuModel
 
-class MenuRVAdapter(private val menuFragment: Menu, private val mList: List<MenuModel>) :
+class MenuRVAdapter(private val menuFragment: Menu, private var mList: List<MenuModel>) :
 
     RecyclerView.Adapter<MenuRVAdapter.ViewHolder>() {
     private var notYetDrink = true;
@@ -69,6 +69,13 @@ class MenuRVAdapter(private val menuFragment: Menu, private val mList: List<Menu
             if(!contains){
                 (menuFragment.activity as MainActivity).updateMenuList.add(newMenuModel)
             }
+            menuFragment.viewModel.apply{
+                insertCart((menuFragment.activity as MainActivity).updateMenuList)
+                getMenu()
+            }
+            if(!menuFragment.filteredList.isEmpty()){
+                menuFragment.filteredList[position] = newMenuModel
+            }
         })
         holder.sub.setOnClickListener(View.OnClickListener { v ->
             var quantity = holder.qty.text.toString().toInt()
@@ -99,6 +106,13 @@ class MenuRVAdapter(private val menuFragment: Menu, private val mList: List<Menu
             if(!contains){
                 (menuFragment.activity as MainActivity).updateMenuList.add(newMenuModel)
             }
+            menuFragment.viewModel.apply{
+                insertCart((menuFragment.activity as MainActivity).updateMenuList)
+                getMenu()
+            }
+            if(!menuFragment.filteredList.isEmpty()){
+                menuFragment.filteredList[position] = newMenuModel
+            }
         })
 
     }
@@ -106,6 +120,12 @@ class MenuRVAdapter(private val menuFragment: Menu, private val mList: List<Menu
     // return the number of the items in the list
     override fun getItemCount(): Int {
         return mList.size
+    }
+
+    fun filterList(filterlist: ArrayList<MenuModel>) {
+        println("filterlist : $filterlist")
+        mList = filterlist
+        notifyDataSetChanged()
     }
 
     // Holds the views for adding it to image and text

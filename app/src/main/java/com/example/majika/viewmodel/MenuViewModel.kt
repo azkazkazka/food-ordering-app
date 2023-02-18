@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 class MenuViewModel(context: Context) : ViewModel() {
     private val repository = Repository(context)
     var menuList : LiveData<List<MenuModel>> = repository.menuList
-    var searchList : LiveData<List<MenuModel>> = repository.searchList
 
     fun getMenu(){
         viewModelScope.launch {
