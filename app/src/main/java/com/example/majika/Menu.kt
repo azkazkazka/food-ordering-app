@@ -45,12 +45,26 @@ class Menu : Fragment(), SensorEventListener {
 
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("updatemenulist", (activity as MainActivity).updateMenuList)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if (savedInstanceState != null) {
+            (activity as MainActivity).updateMenuList =
+                savedInstanceState.getSerializable("updatemenulist") as ArrayList<MenuModel>;
+        } else {
+            // no data to retrieve
+        }
+
+        val orientation = resources.configuration.orientation
+        val layoutId = if (orientation == Configuration.ORIENTATION_PORTRAIT) R.layout.fragment_menu_portrait else R.layout.fragment_menu_landscape
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_menu, container, false)
+        val view: View = inflater.inflate(layoutId, container, false)
 
         tempText = view.findViewById(R.id.tempText)
 
