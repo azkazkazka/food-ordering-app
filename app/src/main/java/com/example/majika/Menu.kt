@@ -55,8 +55,11 @@ class Menu : Fragment(), SensorEventListener {
         } else {
             // no data to retrieve
         }
+
+        val orientation = resources.configuration.orientation
+        val layoutId = if (orientation == Configuration.ORIENTATION_PORTRAIT) R.layout.fragment_menu_portrait else R.layout.fragment_menu_landscape
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_menu, container, false)
+        val view: View = inflater.inflate(layoutId, container, false)
 
         tempText = view.findViewById(R.id.tempText)
 
