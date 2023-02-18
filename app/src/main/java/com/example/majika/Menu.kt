@@ -1,10 +1,17 @@
 package com.example.majika
 
+import android.content.Context.SENSOR_SERVICE
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +20,7 @@ import com.example.majika.model.MenuModel
 import com.example.majika.viewmodel.MenuViewModel
 
 
-class Menu : Fragment() {
+class Menu : Fragment(), SensorEventListener {
 
     lateinit var sensorManager : SensorManager
     lateinit var sensor : Sensor
