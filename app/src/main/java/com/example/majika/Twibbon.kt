@@ -44,9 +44,10 @@ class Twibbon : Fragment() {
 
     private fun takePicture() {
         if (cameraButton.text == "Camera") {
-            previewRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)
-            previewRequestBuilder.addTarget(imageReader.surface)
-            previewSession.capture(previewRequestBuilder.build(), null, null)
+            val singleReq = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)
+            singleReq.addTarget(imageReader.surface)
+            previewSession.capture(singleReq.build(), null, null)
+            previewSession.stopRepeating()
             cameraButton.text = "Retake Photo?"
         } else {
             cameraButton.text = "Camera"
