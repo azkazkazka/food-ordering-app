@@ -24,7 +24,7 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/purple_700"
+                android:background="@color/pink"
                 android:padding="10dp"
                 android:text="Menu Fragment"
                 android:textAlignment="center"

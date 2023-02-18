@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.MainActivity
 import com.example.majika.Menu
@@ -14,7 +15,6 @@ import com.example.majika.model.MenuModel
 class MenuRVAdapter(private val menuFragment: Menu, private var mList: List<MenuModel>) :
 
     RecyclerView.Adapter<MenuRVAdapter.ViewHolder>() {
-    private var notYetDrink = true;
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -29,12 +29,15 @@ class MenuRVAdapter(private val menuFragment: Menu, private var mList: List<Menu
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var menuModel = mList[position]
 
-        println(menuModel.get_type)
         if (position == 0 && menuModel.get_type == "Food") {
             holder.header.text = "Makanan"
-        } else if (notYetDrink && menuModel.get_type == "Drink") {
+            holder.header.visibility = View.VISIBLE
+        } else if (position == 0 && menuModel.get_type == "Drink") {
+            holder.header.text = "Makanan"
+            holder.header.visibility = View.VISIBLE
+        } else if (mList[position - 1].get_type == "Food" && menuModel.get_type == "Drink") {
             holder.header.text = "Minuman"
-            notYetDrink = false
+            holder.header.visibility = View.VISIBLE
         } else {
             holder.header.visibility = View.GONE
         }

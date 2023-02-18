@@ -17,7 +17,7 @@
         app:cardCornerRadius="25dp"
         app:contentPadding="15dp"
         app:cardElevation="8dp"
-        app:cardBackgroundColor="@color/purple_500" >
+        app:cardBackgroundColor="@color/pink" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,7 +31,8 @@
                 android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/baseline_location_on_24" />
+                app:srcCompat="@drawable/baseline_location_on_24"
+                android:tint="@color/white" />
 
             <TextView
                 android:id="@+id/cabangRestoran"
@@ -42,6 +43,7 @@
                 android:text="Cabang Restoran"
                 android:textSize="24dp"
                 android:textStyle="bold"
+                android:textColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,6 +54,7 @@
                 android:layout_marginStart="4dp"
                 android:text="Lokasi Restoran"
                 android:textSize="16dp"
+                android:textColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cabangRestoran" />
 
@@ -63,6 +66,7 @@
                 android:text="TextView"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -74,6 +78,7 @@
                 android:text="TextView"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/phoneNumber" />
 

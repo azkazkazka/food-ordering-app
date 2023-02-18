@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Payment"
-            android:background="@color/purple_500"
+            android:background="@color/pink"
             android:padding="10dp"
             android:textColor="@color/white"
             android:textAlignment="center"

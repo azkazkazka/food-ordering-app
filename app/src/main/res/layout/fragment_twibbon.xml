@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:backgroundTint="@color/white"
+    android:background="@color/pink"
     tools:context=".Twibbon">
 
     <!-- TODO: Update blank fragment layout -->
@@ -18,7 +17,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/purple_700"
+            android:background="@color/pink"
             android:padding="10dp"
             android:text="Twibbon Fragment"
             android:textAlignment="center"
@@ -34,7 +33,7 @@
             android:layout_width="350dp"
             android:layout_height="450dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="90dp"
             android:layout_marginEnd="31dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,14 +43,14 @@
             android:id="@+id/twibbonView"
             android:layout_width="350dp"
             android:layout_height="450dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="90dp"
             android:layout_marginEnd="31dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:srcCompat="@drawable/twibbon_1" />
 
         <Button
@@ -62,6 +61,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="156dp"
             android:text="Camera"
+            android:textColor="@color/pink"
+            android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/surfaceView" />

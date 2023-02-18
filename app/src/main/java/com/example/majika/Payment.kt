@@ -2,10 +2,13 @@ package com.example.majika
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.hardware.Camera
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -55,31 +58,38 @@ class Payment : AppCompatActivity() {
                 runOnUiThread {
                     Log.d("Main", "Scan result: ${it.text}")
                     val duration = 5000
+                    val dur = 3000
                     viewModel.apply {
                         postPayment(it.text)
                         paymentStatus.observe(this@Payment) { paymentStatus ->
                             if (paymentStatus == "SUCCESS") {
-                                val toast = Toast.makeText(this@Payment, "Payment Success", Toast.LENGTH_LONG)
-                                toast.show()
+//                                val toast = Toast.makeText(this@Payment, "Payment Success", Toast.LENGTH_LONG)
+//                                toast.show()
+                                findViewById<TextView>(R.id.text_view).setText("Payment Success. Enjoy!")
+//                                findViewById<View>(R.id.scanner_view).setBackgroundColor(Color.parseColor("#FFFFFF
+                                onPause()
                                 Handler().postDelayed({
                                     val intent = Intent(this@Payment, MainActivity::class.java)
                                     startActivity(intent)
                                 }, duration.toLong())
                             } else {
-                                val toast = Toast.makeText(this@Payment, "Payment Failed", Toast.LENGTH_LONG)
-                                toast.show()
-                                onResume()
+//                                val toast = Toast.makeText(this@Payment, "Payment Failed", Toast.LENGTH_LONG)
+//                                toast.show()
+                                findViewById<TextView>(R.id.text_view).setText("Payment Failed")
+                                Handler().postDelayed({
+                                    onResume()
+                                }, dur.toLong())
                             }
                         }
                     }
                 }
             }
 
-            errorCallback = ErrorCallback {
-                runOnUiThread {
-                    Log.e("Main", "Camera initialization error: ${it.message}")
-                }
-            }
+//            errorCallback = Camera.ErrorCallback {
+//                runOnUiThread {
+//                    Log.e("Main", "Camera initialization error: ${it.message}")
+//                }
+//            }
 
             findViewById<View>(R.id.scanner_view).setOnClickListener {
                 codeScanner.startPreview()

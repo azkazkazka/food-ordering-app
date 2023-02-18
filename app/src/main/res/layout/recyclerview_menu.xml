@@ -22,6 +22,7 @@
                 android:id="@+id/typeHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="TextView"
                 android:textSize="32dp"
                 android:textStyle="bold"
@@ -33,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                app:cardBackgroundColor="@color/purple_500"
+                app:cardBackgroundColor="@color/pink"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="8dp"
                 app:contentPadding="15dp"
@@ -54,6 +55,7 @@
                         android:text="Harga"
                         android:textSize="16dp"
                         android:textStyle="bold"
+                        android:textColor="@android:color/white"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/menuRestoran" />
 
@@ -65,6 +67,7 @@
                         android:text="Menu Restoran"
                         android:textSize="24dp"
                         android:textStyle="bold"
+                        android:textColor="@android:color/white"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,6 +80,7 @@
                         android:maxLines="2"
                         android:text="Deskripsi"
                         android:textSize="16dp"
+                        android:textColor="@android:color/white"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/hargaMenu" />
 
@@ -89,6 +93,7 @@
                         android:text="Menu Terjual"
                         android:textAlignment="textEnd"
                         android:textSize="12sp"
+                        android:textColor="@android:color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,7 +107,7 @@
                         android:backgroundTint="@color/white"
                         android:text="+"
                         android:textAlignment="center"
-                        android:textColor="@color/purple_500"
+                        android:textColor="@color/pink"
                         android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/deskripsiMenu" />
@@ -131,7 +136,7 @@
                         android:backgroundTint="@color/white"
                         android:text="-"
                         android:textAlignment="center"
-                        android:textColor="@color/purple_500"
+                        android:textColor="@color/pink"
                         android:textSize="28sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/deskripsiMenu" />

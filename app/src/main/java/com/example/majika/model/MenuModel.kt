@@ -9,6 +9,7 @@ class MenuModel (
     private var type: String,
     private var quantity: Int,
     ) {
+
     var get_name: String = name
         get() = field
 

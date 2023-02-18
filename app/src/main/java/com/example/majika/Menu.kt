@@ -1,6 +1,7 @@
 package com.example.majika
 
 import android.content.Context.SENSOR_SERVICE
+import android.content.res.Configuration
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
