@@ -1,25 +1,19 @@
 package com.example.majika
 
-import android.content.Context.SENSOR_SERVICE
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.adapter.MenuRVAdapter
+import com.example.majika.model.MenuModel
 import com.example.majika.viewmodel.MenuViewModel
 
 
-class Menu : Fragment(), SensorEventListener {
+class Menu : Fragment() {
 
     lateinit var sensorManager : SensorManager
     lateinit var sensor : Sensor
@@ -39,10 +33,21 @@ class Menu : Fragment(), SensorEventListener {
 
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("updatemenulist", (activity as MainActivity).updateMenuList)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if (savedInstanceState != null) {
+            (activity as MainActivity).updateMenuList =
+                savedInstanceState.getSerializable("updatemenulist") as ArrayList<MenuModel>;
+        } else {
+            // no data to retrieve
+        }
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_menu, container, false)
 
