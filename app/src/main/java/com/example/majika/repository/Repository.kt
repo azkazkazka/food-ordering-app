@@ -14,9 +14,10 @@ import kotlinx.coroutines.delay
 class Repository(context: Context) {
     val menuList = MutableLiveData<List<MenuModel>>()
     val searchList = MutableLiveData<List<MenuModel>>()
-    val cartList = MutableLiveData<List<MenuDB>>()
+    val cartList = MutableLiveData<List<MenuModel>>()
     val locationList = MutableLiveData<List<LocationModel>>()
     val paymentStatus = MutableLiveData<String>()
+    val totalPrice = MutableLiveData<Int>()
 
     private val api: ApiInterface = ApiUtils.getApiInterface()
     private val room: MenuDBDao? =
@@ -142,18 +143,53 @@ class Repository(context: Context) {
             e.printStackTrace()
         }
     }
-//    suspend fun getAllCart(){
-//        cartList.value = room?.getAll()
-//    }
-//    suspend fun getAll() = room?.getAll()
-//
-//    suspend fun loadAllByIds(menuIds: IntArray) = room?.loadAllByIds(menuIds)
-//
-//    suspend fun findByName(name: String) = room?.findByName(name)
-//
-//    suspend fun insertAll(vararg menu: MenuDB) = room?.insertAll(*menu)
-//
-//    suspend fun update(name: String, quantity: Int) = room?.update(name, quantity)
-//
-//    suspend fun delete(menu: MenuDB) = room?.delete(menu)
+
+    suspend fun getCart(){
+        try{
+            delay(500)
+            var tempCartList = room?.getAll()
+            //convert tempcartlist to menu model
+            var cartModel = mutableListOf<MenuModel>()
+            if(tempCartList != null){
+                for (data in tempCartList) {
+                    if (data.quantity!! != 0) {
+                        cartModel.add(
+                            MenuModel(
+                                data.name!!,
+                                data.description!!,
+                                data.currency!!,
+                                data.price!!,
+                                data.sold!!,
+                                data.type!!,
+                                data.quantity!!
+                            )
+                        )
+                    }
+                }
+                cartList.value = cartModel
+            }
+        }
+        catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
+
+    suspend fun getPrice(){
+        try{
+            delay(500)
+            var tempCartList = room?.getAll()
+            var price = 0
+            if(tempCartList != null){
+                for (data in tempCartList) {
+                    if (data.quantity!! != 0) {
+                        price += data.price!! * data.quantity!!
+                    }
+                }
+                totalPrice.value = price
+            }
+        }
+        catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
 }
