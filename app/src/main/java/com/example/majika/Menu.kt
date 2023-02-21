@@ -25,7 +25,7 @@ import com.example.majika.viewmodel.MenuViewModel
 class Menu : Fragment(), SensorEventListener {
 
     lateinit var sensorManager : SensorManager
-    lateinit var sensor : Sensor
+    var sensor : Sensor? = null
     lateinit var tempText : TextView
     lateinit var searchView: SearchView
     lateinit var adapter: MenuRVAdapter

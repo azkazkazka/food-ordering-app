@@ -2,34 +2,22 @@ package com.example.majika
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.hardware.Camera
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.FragmentManager
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
-import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
-import com.example.majika.adapter.MenuRVAdapter
-import com.example.majika.model.PaymentModel
-import com.example.majika.response.ResponsePayment
 import com.example.majika.viewmodel.PaymentViewModel
-import com.google.gson.JsonObject
-import kotlinx.coroutines.delay
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 
 class Payment : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
@@ -40,6 +28,10 @@ class Payment : AppCompatActivity() {
 
         setupPermissions()
         codeScanner()
+
+        findViewById<Button>(R.id.button2).setOnClickListener(View.OnClickListener {
+            onBackPressed()
+        })
     }
 
     private fun codeScanner() {
@@ -58,38 +50,37 @@ class Payment : AppCompatActivity() {
                 runOnUiThread {
                     Log.d("Main", "Scan result: ${it.text}")
                     val duration = 5000
-                    val dur = 3000
+                    val dur = 2000
+                    var payment = ""
+                    var notYetSuccess = true
+                    var count = 1
                     viewModel.apply {
                         postPayment(it.text)
                         paymentStatus.observe(this@Payment) { paymentStatus ->
-                            if (paymentStatus == "SUCCESS") {
-//                                val toast = Toast.makeText(this@Payment, "Payment Success", Toast.LENGTH_LONG)
-//                                toast.show()
-                                findViewById<TextView>(R.id.text_view).setText("Payment Success. Enjoy!")
-//                                findViewById<View>(R.id.scanner_view).setBackgroundColor(Color.parseColor("#FFFFFF
-                                onPause()
-                                Handler().postDelayed({
-                                    val intent = Intent(this@Payment, MainActivity::class.java)
+                            payment = paymentStatus
+                            if (payment == "SUCCESS") {
+                                if (notYetSuccess && count == 1) {
+                                    println("Payment Status: $paymentStatus")
+                                    codeScanner.releaseResources()
+                                    codeScanner.stopPreview()
+                                    findViewById<TextView>(R.id.text_view).setText("Payment Success.\nEnjoy!")
+//                                    Handler().postDelayed({
+                                    val intent = Intent(this@Payment, PaymentSuccess::class.java)
                                     startActivity(intent)
-                                }, duration.toLong())
+//                                    }, duration.toLong())
+                                }
+                                notYetSuccess = false
+                                count++
                             } else {
-//                                val toast = Toast.makeText(this@Payment, "Payment Failed", Toast.LENGTH_LONG)
-//                                toast.show()
-                                findViewById<TextView>(R.id.text_view).setText("Payment Failed")
+                                findViewById<TextView>(R.id.text_view).setText("Payment Failed.\nPlease Retry in a Few Second")
                                 Handler().postDelayed({
-                                    onResume()
+                                    codeScanner.startPreview()
                                 }, dur.toLong())
                             }
                         }
                     }
                 }
             }
-
-//            errorCallback = Camera.ErrorCallback {
-//                runOnUiThread {
-//                    Log.e("Main", "Camera initialization error: ${it.message}")
-//                }
-//            }
 
             findViewById<View>(R.id.scanner_view).setOnClickListener {
                 codeScanner.startPreview()
@@ -143,5 +134,14 @@ class Payment : AppCompatActivity() {
 
     companion object {
         private const val CAMERA_REQ = 101
+    }
+
+    override fun onBackPressed() {
+        val fm: FragmentManager = supportFragmentManager
+        if (fm.backStackEntryCount > 0) {
+            fm.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
     }
 }

@@ -13,16 +13,30 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Payment"
-            android:background="@color/pink"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:textSize="26dp"
-            android:textStyle="bold"/>
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Payment"
+                android:background="@color/pink"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="26dp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/button2"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back" />
+
+        </RelativeLayout>
 
         <com.budiyev.android.codescanner.CodeScannerView
             android:id="@+id/scanner_view"
@@ -38,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:text="Scanning"
+            android:textSize="25dp"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
