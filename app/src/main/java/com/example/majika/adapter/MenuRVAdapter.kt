@@ -22,6 +22,7 @@ class MenuRVAdapter(private val menuFragment: Menu, private var mList: List<Menu
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recyclerview_menu, parent, false)
 
+        // scroll to the last position of the list
         return ViewHolder(view)
     }
 
@@ -33,7 +34,7 @@ class MenuRVAdapter(private val menuFragment: Menu, private var mList: List<Menu
             holder.header.text = "Makanan"
             holder.header.visibility = View.VISIBLE
         } else if (position == 0 && menuModel.get_type == "Drink") {
-            holder.header.text = "Makanan"
+            holder.header.text = "Minuman"
             holder.header.visibility = View.VISIBLE
         } else if (mList[position - 1].get_type == "Food" && menuModel.get_type == "Drink") {
             holder.header.text = "Minuman"
@@ -48,6 +49,8 @@ class MenuRVAdapter(private val menuFragment: Menu, private var mList: List<Menu
         holder.qty.text = menuModel.get_quantity.toString()
         holder.add.setOnClickListener(View.OnClickListener { v ->
             var quantity = holder.qty.text.toString().toInt()
+            menuFragment.scrollState = holder.absoluteAdapterPosition
+            menuFragment.scrollPosition = holder.itemView.top
             quantity = quantity + 1
             holder.qty.text = quantity.toString()
             // if updateMenuModel contain menuModel, update the quantity
@@ -63,7 +66,12 @@ class MenuRVAdapter(private val menuFragment: Menu, private var mList: List<Menu
             )
             var contains = false
             for(i in 0 until (menuFragment.activity as MainActivity).updateMenuList.size){
-                if((menuFragment.activity as MainActivity).updateMenuList[i].get_name == menuModel.get_name){
+                if(
+                    (menuFragment.activity as MainActivity).updateMenuList[i].get_name == menuModel.get_name &&
+                    (menuFragment.activity as MainActivity).updateMenuList[i].get_description == menuModel.get_description &&
+                    (menuFragment.activity as MainActivity).updateMenuList[i].get_price == menuModel.get_price &&
+                    (menuFragment.activity as MainActivity).updateMenuList[i].get_type == menuModel.get_type
+                ){
                     (menuFragment.activity as MainActivity).updateMenuList[i] = newMenuModel
                     contains = true
                     break
@@ -79,9 +87,12 @@ class MenuRVAdapter(private val menuFragment: Menu, private var mList: List<Menu
             if(!menuFragment.filteredList.isEmpty()){
                 menuFragment.filteredList[position] = newMenuModel
             }
+
         })
         holder.sub.setOnClickListener(View.OnClickListener { v ->
             var quantity = holder.qty.text.toString().toInt()
+            menuFragment.scrollState = holder.absoluteAdapterPosition
+            menuFragment.scrollPosition = holder.itemView.top
             if (quantity > 0) {
                 quantity = quantity - 1
                 holder.qty.text = quantity.toString()
@@ -97,10 +108,14 @@ class MenuRVAdapter(private val menuFragment: Menu, private var mList: List<Menu
                 menuModel.get_type,
                 quantity
             )
-            println(quantity)
             var contains = false
             for(i in 0 until (menuFragment.activity as MainActivity).updateMenuList.size){
-                if((menuFragment.activity as MainActivity).updateMenuList[i].get_name == menuModel.get_name){
+                if(
+                    (menuFragment.activity as MainActivity).updateMenuList[i].get_name == menuModel.get_name &&
+                    (menuFragment.activity as MainActivity).updateMenuList[i].get_description == menuModel.get_description &&
+                    (menuFragment.activity as MainActivity).updateMenuList[i].get_price == menuModel.get_price &&
+                    (menuFragment.activity as MainActivity).updateMenuList[i].get_type == menuModel.get_type
+                ){
                     (menuFragment.activity as MainActivity).updateMenuList[i] = newMenuModel
                     contains = true
                     break
@@ -126,7 +141,6 @@ class MenuRVAdapter(private val menuFragment: Menu, private var mList: List<Menu
     }
 
     fun filterList(filterlist: ArrayList<MenuModel>) {
-        println("filterlist : $filterlist")
         mList = filterlist
         notifyDataSetChanged()
     }

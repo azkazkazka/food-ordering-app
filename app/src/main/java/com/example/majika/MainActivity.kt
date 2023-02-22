@@ -24,9 +24,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         replaceFragment(Menu())
+        // select the active navigation
         binding.bottomNavigationView.selectedItemId = R.id.menu
 
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
+        binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu -> {
                     replaceFragment(Menu())

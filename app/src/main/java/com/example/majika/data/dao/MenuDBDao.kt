@@ -11,8 +11,8 @@ interface MenuDBDao {
     @Query("SELECT * FROM MenuDB WHERE id IN (:menuIds)")
     fun loadAllByIds(menuIds: IntArray): List<MenuDB>
 
-    @Query("SELECT quantity FROM MenuDB WHERE name = :name")
-    fun getQuantity(name: String): Int
+    @Query("SELECT quantity FROM MenuDB WHERE name = :name AND description = :desc AND price = :price AND type = :type")
+    fun getQuantity(name: String, desc: String, price: Int, type: String): Int
 
     @Insert
     fun insert(menu: MenuDB)

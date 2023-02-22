@@ -52,7 +52,12 @@ class CartRVAdapter(private val cartFragment: Cart, private val mList: List<Menu
             )
             var contains = false
             for(i in 0 until (cartFragment.activity as MainActivity).updateMenuList.size){
-                if((cartFragment.activity as MainActivity).updateMenuList[i].get_name == menuModel.get_name){
+                if(
+                    (cartFragment.activity as MainActivity).updateMenuList[i].get_name == menuModel.get_name &&
+                    (cartFragment.activity as MainActivity).updateMenuList[i].get_description == menuModel.get_description &&
+                    (cartFragment.activity as MainActivity).updateMenuList[i].get_price == menuModel.get_price &&
+                    (cartFragment.activity as MainActivity).updateMenuList[i].get_type == menuModel.get_type
+                ){
                     (cartFragment.activity as MainActivity).updateMenuList[i] = newMenuModel
                     contains = true
                     break
@@ -87,7 +92,12 @@ class CartRVAdapter(private val cartFragment: Cart, private val mList: List<Menu
             println(quantity)
             var contains = false
             for(i in 0 until (cartFragment.activity as MainActivity).updateMenuList.size){
-                if((cartFragment.activity as MainActivity).updateMenuList[i].get_name == menuModel.get_name){
+                if(
+                    (cartFragment.activity as MainActivity).updateMenuList[i].get_name == menuModel.get_name &&
+                    (cartFragment.activity as MainActivity).updateMenuList[i].get_description == menuModel.get_description &&
+                    (cartFragment.activity as MainActivity).updateMenuList[i].get_price == menuModel.get_price &&
+                    (cartFragment.activity as MainActivity).updateMenuList[i].get_type == menuModel.get_type
+                ){
                     (cartFragment.activity as MainActivity).updateMenuList[i] = newMenuModel
                     contains = true
                     break

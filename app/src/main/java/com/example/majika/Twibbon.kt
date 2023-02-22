@@ -2,8 +2,6 @@ package com.example.majika
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.ImageFormat
 import android.graphics.SurfaceTexture
 import android.hardware.camera2.*
@@ -15,18 +13,19 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class Twibbon : Fragment() {
     private lateinit var textureView: TextureView
     private lateinit var cameraDevice: CameraDevice
     private lateinit var cameraButton: Button
+    private lateinit var flipCamera: Button
     private lateinit var previewSession: CameraCaptureSession
     private lateinit var previewRequestBuilder: CaptureRequest.Builder
     private lateinit var previewRequest: CaptureRequest
     private lateinit var manager: CameraManager
     private lateinit var imageReader: ImageReader
+    private var cameraId : String = "1"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,9 +36,19 @@ class Twibbon : Fragment() {
         textureView = view.findViewById(R.id.surfaceView)
         textureView.surfaceTextureListener = surfaceTextureListener
         cameraButton = view.findViewById(R.id.camera_button)
+        flipCamera = view.findViewById(R.id.flip_camera)
         manager = requireActivity().getSystemService(Context.CAMERA_SERVICE) as CameraManager
         cameraButton.setOnClickListener {
             takePicture();
+        }
+        flipCamera.setOnClickListener {
+            if (cameraId == "1") {
+                cameraId = "0"
+            } else {
+                cameraId = "1"
+            }
+            cameraDevice.close()
+            openCamera();
         }
         imageReader = ImageReader.newInstance(350, 450, ImageFormat.JPEG, 1)
         return view
@@ -51,10 +60,12 @@ class Twibbon : Fragment() {
             singleReq.addTarget(imageReader.surface)
             previewSession.capture(singleReq.build(), null, null)
             previewSession.stopRepeating()
+            flipCamera.visibility = View.GONE
             cameraButton.text = "Retake Photo?"
         } else {
+            flipCamera.visibility = View.VISIBLE
             cameraButton.text = "Camera"
-            openCamera()
+            createCameraPreviewSession()
         }
     }
 
@@ -85,7 +96,6 @@ class Twibbon : Fragment() {
     }
 
     private fun openCamera() {
-        val cameraId = manager.cameraIdList.firstOrNull()
         if (cameraId == null) {
             Toast.makeText(
                 this.context,

@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,8 @@ class Menu : Fragment(), SensorEventListener {
     lateinit var adapter: MenuRVAdapter
     var filteredList: ArrayList<MenuModel> = ArrayList<MenuModel>()
     var menuNow: List<MenuModel> = ArrayList<MenuModel>()
+    var scrollState : Int = -1
+    var scrollPosition : Int = -1
 
     val viewModel by lazy { MenuViewModel(requireContext()) }
 
@@ -48,6 +51,7 @@ class Menu : Fragment(), SensorEventListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putSerializable("updatemenulist", (activity as MainActivity).updateMenuList)
+        outState.putSerializable("scrollstate", scrollState)
         super.onSaveInstanceState(outState)
     }
 
@@ -58,6 +62,7 @@ class Menu : Fragment(), SensorEventListener {
         if (savedInstanceState != null) {
             (activity as MainActivity).updateMenuList =
                 savedInstanceState.getSerializable("updatemenulist") as ArrayList<MenuModel>;
+            scrollState = savedInstanceState.getSerializable("scrollstate") as Int
         } else {
             // no data to retrieve
         }
@@ -84,7 +89,11 @@ class Menu : Fragment(), SensorEventListener {
                     adapter = MenuRVAdapter(this@Menu, filteredList)
                 }
                 recyclerView.adapter = adapter
-                recyclerView.layoutManager = LinearLayoutManager(view.context)
+                var lm = LinearLayoutManager(view.context)
+                if (scrollState != -1 && scrollPosition != -1) {
+                    lm.scrollToPositionWithOffset(scrollState, scrollPosition)
+                }
+                recyclerView.layoutManager = lm
             }
         }
 
@@ -95,21 +104,19 @@ class Menu : Fragment(), SensorEventListener {
             }
 
             override fun onQueryTextChange(msg: String): Boolean {
-                println("msg: $msg")
                 // inside on query text change method we are
                 // calling a method to filter our recycler view.
                 filteredList = ArrayList()
 
                 for (item in menuNow) {
-                    println(item.get_name.lowercase())
                     if (item.get_name.lowercase().contains(msg.lowercase())) {
                         filteredList.add(item)
                     }
                 }
                 if (filteredList.isEmpty()) {
-//                    Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Menu.context, "No Data Found..", Toast.LENGTH_SHORT).show()
+                    adapter.filterList(filteredList)
                 } else {
-                    println("filteredlist: $filteredList")
                     adapter.filterList(filteredList)
                 }
                 return false

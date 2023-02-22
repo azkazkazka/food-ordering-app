@@ -31,7 +31,7 @@ class Repository(context: Context) {
             var drinkModel = mutableListOf<MenuModel>()
             if (response.isSuccessful) {
                 for (data in response.body()!!.data) {
-                    var quantity = room?.getQuantity(data.name)
+                    var quantity = room?.getQuantity(data.name, data.description, data.price, data.type)
                     if(quantity == null){
                         quantity = 0
                     }

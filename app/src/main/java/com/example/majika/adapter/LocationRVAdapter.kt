@@ -38,7 +38,6 @@ class LocationRVAdapter(private val mList: List<LocationModel>) :
             val context = v.context
             val gmmIntentUri = Uri.parse("http://maps.google.com/maps?q=loc:${lat},${long}(${locationModel.get_name})")
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            mapIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
             context.startActivity(mapIntent)
         })
     }

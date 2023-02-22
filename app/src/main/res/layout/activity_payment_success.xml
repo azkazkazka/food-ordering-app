@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green"
+    android:background="@color/white"
     tools:context=".PaymentSuccess">
 
     <LinearLayout
@@ -21,8 +21,8 @@
             android:gravity="center"
             android:text="️Payment Success. \nEnjoy Your Meal!\n✔"
             android:textAlignment="center"
-            android:textColor="@color/pink"
-            android:textSize="25dp"
+            android:textColor="@color/green"
+            android:textSize="28dp"
             android:textStyle="bold" />
     </LinearLayout>
 
