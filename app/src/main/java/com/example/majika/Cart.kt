@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,12 @@ class Cart : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_cart, container, false)
         val buttonBayar : Button = view.findViewById(R.id.bayarButton)
         buttonBayar.setOnClickListener {
+            // check if there is any item in cart or the price is 0
+            if (viewModel.cartList.value?.size == 0 || viewModel.totalPrice.value == 0) {
+                // make toast message about empty cart
+                Toast.makeText(activity, "Keranjang Kosong", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val intent : Intent = Intent(activity, Payment::class.java)
             startActivity(intent)
         }
