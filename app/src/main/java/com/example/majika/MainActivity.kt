@@ -19,6 +19,16 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState, outPersistentState)
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // check if current fragment is Menu fragment
+        if (supportFragmentManager.findFragmentById(R.id.frame_layout) is Menu) {
+            // if yes, then update the menu list
+            replaceFragment(Menu())
+        }
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

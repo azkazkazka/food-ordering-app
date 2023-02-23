@@ -8,7 +8,6 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +45,6 @@ class Menu : Fragment(), SensorEventListener {
         if (sensor == null) {
             Toast.makeText(this?.activity, "Your device does not support temperature sensor!", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -60,9 +58,13 @@ class Menu : Fragment(), SensorEventListener {
         savedInstanceState: Bundle?
     ): View? {
         if (savedInstanceState != null) {
-            (activity as MainActivity).updateMenuList =
-                savedInstanceState.getSerializable("updatemenulist") as ArrayList<MenuModel>;
-            scrollState = savedInstanceState.getSerializable("scrollstate") as Int
+            if (savedInstanceState.getSerializable("updatemenulist") != null) {
+                (activity as MainActivity).updateMenuList =
+                    savedInstanceState.getSerializable("updatemenulist") as ArrayList<MenuModel>;
+            }
+            if (savedInstanceState.getSerializable("scrollstate") != null) {
+                scrollState = savedInstanceState.getSerializable("scrollstate") as Int
+            }
         } else {
             // no data to retrieve
         }
@@ -76,7 +78,6 @@ class Menu : Fragment(), SensorEventListener {
 
 
         val recyclerView: RecyclerView = view.findViewById(R.id.menuRecyclerView)
-//        lateinit var adapter: MenuRVAdapter
         viewModel.apply {
             insertCart((activity as MainActivity).updateMenuList)
             getMenu()
@@ -113,11 +114,13 @@ class Menu : Fragment(), SensorEventListener {
                         filteredList.add(item)
                     }
                 }
-                if (filteredList.isEmpty()) {
+                if (filteredList.isEmpty() && this@Menu::adapter.isInitialized) {
                     Toast.makeText(this@Menu.context, "No Data Found..", Toast.LENGTH_SHORT).show()
                     adapter.filterList(filteredList)
                 } else {
-                    adapter.filterList(filteredList)
+                    if (this@Menu::adapter.isInitialized) {
+                        adapter.filterList(filteredList)
+                    }
                 }
                 return false
             }
