@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:background="@color/pink"
             android:padding="10dp"
-            android:text="Cart Fragment"
+            android:text="Cart"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="26dp"

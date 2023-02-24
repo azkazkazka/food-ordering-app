@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/pink"
                 android:padding="10dp"
-                android:text="Menu Fragment"
+                android:text="Menu"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="26dp"

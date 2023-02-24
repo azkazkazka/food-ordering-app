@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:background="@color/pink"
             android:padding="10dp"
-            android:text="Location Fragment"
+            android:text="Location"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="26dp"
