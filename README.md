@@ -14,6 +14,8 @@ Aplikasi ini merupakan suatu aplikasi yang dapat digunakan untuk memesan makanan
 
 - Retrofit
 - CodeScanner (Yuriy-Budiyev)
+- Camera2
+- Room
 
 ## Screenshots Aplikasi
 
